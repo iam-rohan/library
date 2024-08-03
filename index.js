@@ -21,6 +21,7 @@ function Book(title, author, pages, isRead) {
 // Add to library
 function addBookToLibrary(book) {
   myLibrary.push(book);
+  displayLibrary();
 }
 
 // New button Functionality
@@ -37,8 +38,21 @@ document.getElementById("showForm").addEventListener("click", function () {
 const Dune = new Book("Dune", "Frank Helbert", 320, false);
 const Martian = new Book("The Martian", "Andy Something", 220, true);
 
-function displayBooks() {
-  myLibrary.forEach((element) => {
-    console.log(element);
+function displayLibrary() {
+  const displayArea = document.getElementById("displayArea");
+  displayArea.innerHTML = "";
+
+  // Loop through the library array to display the book objects
+  myLibrary.forEach((book) => {
+    const bookCard = document.createElement("div");
+    bookCard.setAttribute("class", "book-card");
+
+    const bookInfo = document.createElement("div");
+    bookInfo.textContent = book.info();
+
+    bookCard.appendChild(bookInfo);
+    displayArea.appendChild(bookCard);
   });
 }
+
+addBookToLibrary();

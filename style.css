@@ -1,3 +1,93 @@
+/* //// ROOT VARIABLES  */
+:root {
+  --body-background: #021526;
+  --display-area-background: #03346e;
+  --btn-background: #6eacda;
+  --btn-hover-background: #e2e2b6;
+  --title-font: vollkorn, serif;
+  --primary-font: "Roboto", sans-serif;
+  --secondary-font: Georgia, serif;
+  --lg-font: 2.5rem;
+  --md-font: 1rem;
+  --sm-font: 0.5rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 16px;
+  background-color: var(--body-background);
+  font-family: var(--primary-font);
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+/* Button Styling */
+
+.btn {
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 800;
+  background-color: var(--btn-background);
+  padding: 0.6% 1%;
+  border-radius: 10px;
+  border: 1px solid white;
+  transition: all 0.5s;
+}
+
+.btn:hover {
+  background-color: var(--btn-hover-background);
+  border: 1px solid var(--btn-background);
+  transform: scale(1.05);
+}
+
+.btn:active {
+  background-color: rgb(110, 23, 23);
+  transform: scale(1);
+}
+
+/* Styling for the landing area */
+.landing-area {
+  display: grid;
+  grid-template-rows: 1fr 1fr 8fr;
+  text-align: center;
+  padding: 1%;
+  height: 100vh;
+}
+
+.page-heading {
+  font-family: "Dancing Script";
+  font-size: 3rem;
+  grid-row: 1 /2;
+}
+
+.interactions {
+  grid-row: 2/3;
+}
+
+#displayArea {
+  grid-row: 3/4;
+  background-color: var(--display-area-background);
+  border-radius: 20px;
+  padding: 1%;
+  display: grid;
+  gap: 10px;
+  grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
+.book-card {
+  padding: 5%;
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+}
+
 .hidden {
   display: none;
 }

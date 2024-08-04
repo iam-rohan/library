@@ -1,6 +1,7 @@
 // // Book Description from ../practice/index.js turning into a Library App
 
-const myLibrary = [];
+const myLibrary = [new Book("Dune", "Frank Herbert", 320, false), new Book("The Martian", "Andy Weir", 220, true)];
+
 // Constructor FUnction
 function Book(title, author, pages, isRead) {
   this.title = title;
@@ -16,27 +17,45 @@ function Book(title, author, pages, isRead) {
   this.info = () => {
     return this.title + " by " + this.author + ", " + this.pages + ", " + result;
   };
-  addBookToLibrary(this);
 }
 // Add to library
 function addBookToLibrary(book) {
   myLibrary.push(book);
   displayLibrary();
 }
+const dialog = document.querySelector("#dialog");
+const submitBtn = document.querySelector("#submitBtn");
+const cancelBtn = document.querySelector("#cancelBtn");
 
-// New button Functionality
+// New entry button Functionality
 document.getElementById("showForm").addEventListener("click", function () {
   var formContainer = document.getElementById("formContainer");
+  formContainer.classList.remove("hidden");
+  dialog.showModal();
 
-  if (formContainer.classList.contains("hidden")) {
-    formContainer.classList.remove("hidden");
-  } else {
-    formContainer.classList.add("hidden");
-  }
+  clearForm();
 });
 
-const Dune = new Book("Dune", "Frank Helbert", 320, false);
-const Martian = new Book("The Martian", "Andy Something", 220, true);
+//Cancel button functionality
+cancelBtn.addEventListener("click", (e) => {
+  dialog.close();
+  clearForm();
+});
+
+//Submit button functionality
+submitBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const author = document.getElementById("author").value.trim();
+  const title = document.getElementById("title").value.trim();
+  const pages = document.getElementById("pages").value.trim();
+  const isRead = document.querySelector('input[name="isRead"]:checked').value === "Read";
+
+  //Creating a new book entry in the library
+  const newBook = new Book(title, author, Number(pages), isRead);
+  addBookToLibrary(newBook);
+  dialog.close();
+});
 
 function displayLibrary() {
   const displayArea = document.getElementById("displayArea");
@@ -54,5 +73,16 @@ function displayLibrary() {
     displayArea.appendChild(bookCard);
   });
 }
+displayLibrary();
 
-addBookToLibrary();
+// Function to clear form fields
+function clearForm() {
+  document.getElementById("author").value = "";
+  document.getElementById("title").value = "";
+  document.getElementById("pages").value = "";
+
+  const isReadRadio = document.querySelector('input[name="isRead"]:checked');
+  if (isReadRadio) {
+    isReadRadio.checked = false;
+  }
+}

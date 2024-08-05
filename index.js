@@ -15,7 +15,7 @@ function Book(title, author, pages, isRead) {
     result = "not read yet.";
   }
   this.info = () => {
-    return this.title + " by " + this.author + ", " + this.pages + ", " + result;
+    return this.title + " by " + this.author + ", " + this.pages + " pages" + ", " + result;
   };
 }
 // Add to library
@@ -62,18 +62,36 @@ function displayLibrary() {
   displayArea.innerHTML = "";
 
   // Loop through the library array to display the book objects
-  myLibrary.forEach((book) => {
+  myLibrary.forEach((book, index) => {
     const bookCard = document.createElement("div");
     bookCard.setAttribute("class", "book-card");
+
+    const deleteCard = document.createElement("button");
+    deleteCard.setAttribute("class", "deleteCardBtn btn");
+    deleteCard.setAttribute("data-index", index);
+    deleteCard.innerHTML = "X";
 
     const bookInfo = document.createElement("div");
     bookInfo.textContent = book.info();
 
     bookCard.appendChild(bookInfo);
+    bookCard.appendChild(deleteCard);
     displayArea.appendChild(bookCard);
+
+    deleteCard.addEventListener("click", (e) => {
+      const bookIndex = e.target.dataset.index;
+
+      deleteRecord(bookIndex);
+    });
   });
 }
 displayLibrary();
+
+// Function to delete a book card and it's entry from the library
+function deleteRecord(bookIndex) {
+  myLibrary.splice(bookIndex, 1);
+  displayLibrary();
+}
 
 // Function to clear form fields
 function clearForm() {

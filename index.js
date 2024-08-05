@@ -2,27 +2,29 @@
 
 const myLibrary = [new Book("Dune", "Frank Herbert", 320, false), new Book("The Martian", "Andy Weir", 220, true)];
 
-// Constructor FUnction
+// Constructor Function
 function Book(title, author, pages, isRead) {
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.isRead = isRead;
-  let result = "";
-  if (isRead == true) {
-    result = "already read.";
-  } else {
-    result = "not read yet.";
-  }
+
   this.info = () => {
-    return this.title + " by " + this.author + ", " + this.pages + " pages" + ", " + result;
+    return this.title + " by " + this.author + ", " + this.pages + " pages.";
   };
 }
+
+//Book prototype to toggle status of isRead
+Book.prototype.toggleReadStatus = function () {
+  this.isRead = !this.isRead;
+};
+
 // Add to library
 function addBookToLibrary(book) {
   myLibrary.push(book);
   displayLibrary();
 }
+
 const dialog = document.querySelector("#dialog");
 const submitBtn = document.querySelector("#submitBtn");
 const cancelBtn = document.querySelector("#cancelBtn");
@@ -49,7 +51,7 @@ submitBtn.addEventListener("click", (e) => {
   const author = document.getElementById("author").value.trim();
   const title = document.getElementById("title").value.trim();
   const pages = document.getElementById("pages").value.trim();
-  const isRead = document.querySelector('input[name="isRead"]:checked').value === "Read";
+  const isRead = document.getElementById("read").checked;
 
   //Creating a new book entry in the library
   const newBook = new Book(title, author, Number(pages), isRead);
@@ -71,12 +73,31 @@ function displayLibrary() {
     deleteCard.setAttribute("data-index", index);
     deleteCard.innerHTML = "X";
 
+    const readStatus = document.createElement("div");
+    readStatus.setAttribute("class", "readStatus");
+    readStatus.innerHTML = "Read Status ";
+
+    const readToggle = document.createElement("button");
+    readToggle.setAttribute("class", "statusbtn btn");
+    readToggle.setAttribute("data-index", index);
+    readToggle.innerHTML = book.isRead ? "Read" : "Not Read";
+
     const bookInfo = document.createElement("div");
+    bookInfo.setAttribute("class", "bookInfo");
     bookInfo.textContent = book.info();
 
     bookCard.appendChild(bookInfo);
     bookCard.appendChild(deleteCard);
+    readStatus.appendChild(readToggle);
+    bookCard.appendChild(readStatus);
     displayArea.appendChild(bookCard);
+
+    readToggle.addEventListener("click", (e) => {
+      const bookIndex = e.target.dataset.index;
+      const bookToToggle = myLibrary[bookIndex];
+      bookToToggle.toggleReadStatus(); // Call the toggle method on the correct book instance
+      displayLibrary(); // Refresh the display after toggling read status
+    });
 
     deleteCard.addEventListener("click", (e) => {
       const bookIndex = e.target.dataset.index;
@@ -99,8 +120,8 @@ function clearForm() {
   document.getElementById("title").value = "";
   document.getElementById("pages").value = "";
 
-  const isReadRadio = document.querySelector('input[name="isRead"]:checked');
-  if (isReadRadio) {
-    isReadRadio.checked = false;
+  const isReadCheckbox = document.getElementById("read");
+  if (isReadCheckbox) {
+    isReadCheckbox.checked = false;
   }
 }

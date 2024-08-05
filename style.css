@@ -83,6 +83,32 @@ body {
   gap: 20%;
 }
 
+/* Inside the dialog styling */
+
+.hidden {
+  display: none;
+}
+
+.formToFill {
+  display: flex;
+  flex-direction: column;
+}
+
+form label {
+  margin: 8% 0 3% 0;
+}
+
+form p {
+  margin: 20% 0% 0% 0%;
+}
+
+.radios {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5%;
+}
+
 #displayArea {
   grid-row: 3/4;
   background-color: var(--display-area-background);
@@ -94,6 +120,7 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 }
 
+/* Book Cards Styling */
 .book-card {
   padding: 12% 10%;
   background-color: white;
@@ -102,6 +129,15 @@ body {
   position: relative;
 }
 
-.hidden {
-  display: none;
+.bookInfo {
+  margin: 10% 0%;
+}
+
+.readStatus {
+  display: flex;
+  margin: 2% 0%;
+}
+
+.readStatus button {
+  width: 60%;
 }

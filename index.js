@@ -1,18 +1,21 @@
 // // Book Description from ../practice/index.js turning into a Library App
 
-const myLibrary = [new Book("Dune", "Frank Herbert", 320, false), new Book("The Martian", "Andy Weir", 220, true)];
-
 // Constructor Function
-function Book(title, author, pages, isRead) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.isRead = isRead;
+class Book {
+  constructor(title, author, pages, isRead) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.isRead = isRead;
+  }
 
-  this.info = () => {
+  info = () => {
     return this.title + " by " + this.author + ", " + this.pages + " pages.";
   };
 }
+
+// Array storing the book records
+const myLibrary = [new Book("Dune", "Frank Herbert", 320, false), new Book("The Martian", "Andy Weir", 220, true)];
 
 //Book prototype to toggle status of isRead
 Book.prototype.toggleReadStatus = function () {

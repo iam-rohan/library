@@ -28,7 +28,6 @@ body {
 }
 
 /* Button Styling */
-
 .btn {
   color: white;
   font-size: 0.9rem;
@@ -60,6 +59,14 @@ body {
   border-radius: 50%;
 }
 
+.form-btns > button {
+  padding: 3%;
+}
+
+.statusbtn {
+  padding: 5%;
+}
+
 /* Styling for the landing area */
 .landing-area {
   display: grid;
@@ -84,7 +91,6 @@ body {
 }
 
 /* Inside the dialog styling */
-
 .hidden {
   display: none;
 }
@@ -92,6 +98,7 @@ body {
 .formToFill {
   display: flex;
   flex-direction: column;
+  width: 400px;
 }
 
 form label {
@@ -102,7 +109,7 @@ form p {
   margin: 20% 0% 0% 0%;
 }
 
-.radios {
+.readStatus {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -141,3 +148,46 @@ form p {
 .readStatus button {
   width: 60%;
 }
+
+/* Validation */
+.error {
+  width: 100%;
+  padding: 0;
+  font-size: 80%;
+  color: white;
+  background-color: #900;
+  border-radius: 0 0 5px 5px;
+  box-sizing: border-box;
+}
+
+input[type="text"],
+input[type="number"] {
+  appearance: none;
+  width: 100%;
+  border: 1px solid #333;
+  margin: 0;
+  font-family: inherit;
+  font-size: 90%;
+  box-sizing: border-box;
+}
+
+/* This is our style for the invalid fields */
+input:invalid {
+  border-color: #900;
+  background-color: #fdd;
+}
+
+/* This is the style of our error messages */
+.error {
+  width: 100%;
+  padding: 0;
+  font-size: 80%;
+  color: white;
+  background-color: #900;
+  border-radius: 0 0 5px 5px;
+  box-sizing: border-box;
+}
+
+.error.active {
+  padding: 0.3em;
+} /* BUTTON STYLINGS */

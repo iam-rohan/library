@@ -16,16 +16,17 @@
         <button class="btn" id="showForm">New Entry</button>
         <dialog id="dialog">
           <div class="hidden" id="formContainer">
-            <form action="#" id="newEntry" class="formToFill">
+            <form action="#" id="newEntry" class="formToFill" novalidate>
               <label for="title">Title:</label>
-              <input type="text" id="title" />
+              <input type="text" id="title" required />
               <label for="author">Author:</label>
-              <input type="text" id="author" />
+              <input type="text" id="author" required />
               <label for="pages">Number of pages:</label>
-              <input type="number" id="pages" />
+              <input type="number" id="pages" required />
+              <span class="error"></span>
 
               <p>Have you read the book?</p>
-              <div class="radios">
+              <div class="readStatus">
                 <input type="checkbox" id="read" name="isRead" value="Read" />
                 <label for="read">Have Read</label>
               </div>

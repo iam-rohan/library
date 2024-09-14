@@ -1,5 +1,4 @@
 // // Book Description from ../practice/index.js turning into a Library App
-
 // Constructor Function
 class Book {
   constructor(title, author, pages, isRead) {
@@ -8,12 +7,10 @@ class Book {
     this.pages = pages;
     this.isRead = isRead;
   }
-
   info = () => {
     return this.title + " by " + this.author + ", " + this.pages + " pages.";
   };
 }
-
 // Array storing the book records
 const myLibrary = [new Book("Dune", "Frank Herbert", 320, false), new Book("The Martian", "Andy Weir", 220, true)];
 
@@ -27,17 +24,20 @@ function addBookToLibrary(book) {
   myLibrary.push(book);
   displayLibrary();
 }
-
 const dialog = document.querySelector("#dialog");
 const submitBtn = document.querySelector("#submitBtn");
 const cancelBtn = document.querySelector("#cancelBtn");
+const author = document.getElementById("author");
+const title = document.getElementById("title");
+const pages = document.getElementById("pages");
+const errorMessage = document.querySelector(".error");
+const formContainer = document.querySelector(".formToFill");
 
 // New entry button Functionality
 document.getElementById("showForm").addEventListener("click", function () {
   var formContainer = document.getElementById("formContainer");
   formContainer.classList.remove("hidden");
   dialog.showModal();
-
   clearForm();
 });
 
@@ -49,62 +49,64 @@ cancelBtn.addEventListener("click", (e) => {
 
 //Submit button functionality
 submitBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-
-  const author = document.getElementById("author").value.trim();
-  const title = document.getElementById("title").value.trim();
-  const pages = document.getElementById("pages").value.trim();
   const isRead = document.getElementById("read").checked;
-
-  //Creating a new book entry in the library
-  const newBook = new Book(title, author, Number(pages), isRead);
-  addBookToLibrary(newBook);
-  dialog.close();
+  // Prevent the form submission
+  e.preventDefault();
+  if (formContainer.checkValidity()) {
+    errorMessage.textContent = "";
+    // Creating a new book entry in the library
+    const newBook = new Book(title.value.trim(), author.value.trim(), Number(pages.value.trim()), isRead);
+    addBookToLibrary(newBook);
+    dialog.close();
+  } else {
+    showError();
+  }
 });
-
+function showError() {
+  if (!title.validity.valid) {
+    errorMessage.textContent = "You need to enter the title of the book.";
+  } else if (!author.validity.valid) {
+    errorMessage.textContent = "You need to enter the Author name.";
+  } else if (!pages.validity.valid) {
+    errorMessage.textContent = "You need to enter the number of pages of the book.";
+  }
+}
 function displayLibrary() {
   const displayArea = document.getElementById("displayArea");
   displayArea.innerHTML = "";
-
   // Loop through the library array to display the book objects
   myLibrary.forEach((book, index) => {
     const bookCard = document.createElement("div");
     bookCard.setAttribute("class", "book-card");
-
     const deleteCard = document.createElement("button");
     deleteCard.setAttribute("class", "deleteCardBtn btn");
     deleteCard.setAttribute("data-index", index);
     deleteCard.innerHTML = "X";
-
     const readStatus = document.createElement("div");
     readStatus.setAttribute("class", "readStatus");
     readStatus.innerHTML = "Read Status ";
-
     const readToggle = document.createElement("button");
     readToggle.setAttribute("class", "statusbtn btn");
     readToggle.setAttribute("data-index", index);
     readToggle.innerHTML = book.isRead ? "Read" : "Not Read";
-
     const bookInfo = document.createElement("div");
     bookInfo.setAttribute("class", "bookInfo");
     bookInfo.textContent = book.info();
-
     bookCard.appendChild(bookInfo);
     bookCard.appendChild(deleteCard);
     readStatus.appendChild(readToggle);
     bookCard.appendChild(readStatus);
     displayArea.appendChild(bookCard);
-
     readToggle.addEventListener("click", (e) => {
       const bookIndex = e.target.dataset.index;
       const bookToToggle = myLibrary[bookIndex];
-      bookToToggle.toggleReadStatus(); // Call the toggle method on the correct book instance
-      displayLibrary(); // Refresh the display after toggling read status
+      bookToToggle.toggleReadStatus();
+      // Call the toggle method on the correct book instance
+      displayLibrary();
+      // Refresh the display after toggling read status
     });
-
     deleteCard.addEventListener("click", (e) => {
       const bookIndex = e.target.dataset.index;
-
       deleteRecord(bookIndex);
     });
   });
@@ -122,7 +124,6 @@ function clearForm() {
   document.getElementById("author").value = "";
   document.getElementById("title").value = "";
   document.getElementById("pages").value = "";
-
   const isReadCheckbox = document.getElementById("read");
   if (isReadCheckbox) {
     isReadCheckbox.checked = false;
